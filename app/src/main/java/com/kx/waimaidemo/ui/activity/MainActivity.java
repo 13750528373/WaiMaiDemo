@@ -1,11 +1,21 @@
-package com.kx.waimaidemo;
+package com.kx.waimaidemo.ui.activity;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import com.kx.waimaidemo.R;
+import com.kx.waimaidemo.ui.fragment.HomeFragment;
+import com.kx.waimaidemo.ui.fragment.MoreFragment;
+import com.kx.waimaidemo.ui.fragment.OrderFragment;
+import com.kx.waimaidemo.ui.fragment.UserFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +37,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        initFragments();
         initBottomBar();
         selected(0);
+    }
+
+    private List<Fragment> fragmentList = new ArrayList<>();
+    //初始化4个模块
+    private void initFragments() {
+        fragmentList.add(new HomeFragment());
+        fragmentList.add(new OrderFragment());
+        fragmentList.add(new UserFragment());
+        fragmentList.add(new MoreFragment());
     }
 
     //初始化底部导航栏
@@ -60,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-       /* getFragmentManager().beginTransaction().replace(R.id.main_fragment_container,
-                mFragmentLists.get(index)).commit();*/
+        getFragmentManager().beginTransaction().replace(R.id.main_fragment_container,
+                fragmentList.get(index)).commit();
     }
 
     //底部导航栏设置点击状态
