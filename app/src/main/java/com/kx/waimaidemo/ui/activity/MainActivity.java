@@ -13,6 +13,7 @@ import com.kx.waimaidemo.ui.fragment.HomeFragment;
 import com.kx.waimaidemo.ui.fragment.MoreFragment;
 import com.kx.waimaidemo.ui.fragment.OrderFragment;
 import com.kx.waimaidemo.ui.fragment.UserFragment;
+import com.kx.waimaidemo.uitls.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout mMainFragmentContainer;
     @BindView(R.id.main_bottome_switcher_container)
     LinearLayout mMainBottomeSwitcherContainer;
+    @BindView(R.id.main)
+    LinearLayout mMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,18 @@ public class MainActivity extends AppCompatActivity {
         initFragments();
         initBottomBar();
         selected(0);
+        //适配底部虚拟按键
+        screenAdapter();
+    }
+
+    private void screenAdapter() {
+        if (ScreenUtils.hasNavBar(this)) {
+            mMain.setPadding(0,0,0,ScreenUtils.getNavigationBarHeight(this));
+        }
     }
 
     private List<Fragment> fragmentList = new ArrayList<>();
+
     //初始化4个模块
     private void initFragments() {
         fragmentList.add(new HomeFragment());
